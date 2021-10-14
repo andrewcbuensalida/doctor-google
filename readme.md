@@ -71,3 +71,6 @@ sudo systemctl reload nginx
 install certbot sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot --nginx
+
+had to config user.name and user.email for git in order to push from vm. git config --global user.name "andrewcbuensalida"
+git config --global user.email "andrewcbuensalida@gmail.com"
