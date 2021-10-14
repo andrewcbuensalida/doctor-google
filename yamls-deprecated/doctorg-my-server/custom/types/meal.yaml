@@ -1,0 +1,13 @@
+synonym:
+  entities:
+    breakfast:
+      synonyms:
+      - breakfast
+    dinner:
+      synonyms:
+      - dinner
+    lunch:
+      synonyms:
+      - lunch
+      - launch
+  matchType: FUZZY_MATCH

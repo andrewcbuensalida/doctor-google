@@ -1,0 +1,11 @@
+parameters:
+- name: unconscious
+  type:
+    name: unconscious
+- name: roomNumber
+  type:
+    name: roomNumber
+trainingPhrases:
+- she is ($unconscious 'unconscious' auto=true)
+- ($unconscious 'unconscious' auto=true)
+- ($roomNumber '252 door' auto=false) is ($unconscious 'unconscious' auto=true)

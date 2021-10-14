@@ -1,0 +1,18 @@
+intentEvents:
+- intent: "yes"
+  transitionToScene: obstruction
+- intent: "no"
+  transitionToScene: cpr
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+onEnter:
+  staticPrompt:
+    candidates:
+    - promptResponse:
+        firstSimple:
+          variants:
+          - speech: Check inside the throat to see if there is an obstruction such
+              as food. Is there an obstruction?

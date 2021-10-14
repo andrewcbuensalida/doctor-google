@@ -1,0 +1,7 @@
+parameters:
+- name: "no"
+  type:
+    name: "no"
+trainingPhrases:
+- ($no 'no' auto=true) they are not breathing
+- ($no 'no' auto=true)

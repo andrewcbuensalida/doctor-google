@@ -1,0 +1,35 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  handler:
+    webhookHandler: whenBowel
+intentEvents:
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+slots:
+- commitBehavior:
+    writeSessionParam: roomNumber
+  name: roomNumber
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: What is the patient's room number?
+  required: true
+  type:
+    name: roomNumber
+- commitBehavior:
+    writeSessionParam: bowel
+  name: bowel
+  type:
+    name: bowel
+- commitBehavior:
+    writeSessionParam: continentIncontinent
+  name: continentIncontinent
+  type:
+    name: continentIncontinent

@@ -1,0 +1,14 @@
+parameters:
+- name: activityLog
+  type:
+    name: activityLog
+- name: roomNumber
+  type:
+    name: roomNumber
+trainingPhrases:
+- tell me ($roomNumber 'room number 7546' auto=false)'s ($activityLog 'activity' auto=true)
+- get($roomNumber ' room 536' auto=false)'s ($activityLog 'activity' auto=true)
+- What is room ($roomNumber '400 door\'s' auto=false) ($activityLog 'log' auto=true)
+- Tell me the ($activityLog 'activity' auto=false) of ($patient 'Bill Gates' auto=false)
+- What is ($patient 'Steve Jobs' auto=false) ($activityLog 'activity log' auto=false)
+- Give me ($patient 'Jeff Bezos' auto=false) ($activityLog 'log' auto=false)

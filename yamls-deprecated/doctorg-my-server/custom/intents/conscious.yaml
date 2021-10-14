@@ -1,0 +1,11 @@
+parameters:
+- name: roomNumber
+  type:
+    name: roomNumber
+- name: conscious
+  type:
+    name: conscious
+trainingPhrases:
+- he is ($conscious 'conscious' auto=true)
+- ($conscious 'conscious' auto=true)
+- ($roomNumber '523 window' auto=true) is ($conscious 'conscious' auto=true)

@@ -1,0 +1,11 @@
+intentEvents:
+- handler:
+    webhookHandler: logIn
+  intent: actions.intent.NO_MATCH_1
+onEnter:
+  staticPrompt:
+    candidates:
+    - promptResponse:
+        firstSimple:
+          variants:
+          - speech: Please say your pass phrase.

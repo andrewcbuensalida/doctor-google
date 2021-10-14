@@ -1,0 +1,9 @@
+synonym:
+  entities:
+    "no":
+      synonyms:
+      - "no"
+      - nah
+      - nope
+      - negative
+  matchType: EXACT_MATCH

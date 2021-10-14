@@ -1,0 +1,7 @@
+parameters:
+- name: "yes"
+  type:
+    name: "yes"
+trainingPhrases:
+- ($yes 'yes' auto=true)
+- ($yes 'yes' auto=true) they are breathing

@@ -1,0 +1,11 @@
+synonym:
+  entities:
+    continent:
+      synonyms:
+      - continent
+      - -in continent
+    incontinent:
+      synonyms:
+      - incontinent
+      - in continent
+  matchType: EXACT_MATCH

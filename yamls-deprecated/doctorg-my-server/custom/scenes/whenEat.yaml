@@ -1,0 +1,30 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  handler:
+    webhookHandler: whenEat
+intentEvents:
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+slots:
+- commitBehavior:
+    writeSessionParam: roomNumber
+  name: roomNumber
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: What is the patient's room number?
+  required: true
+  type:
+    name: roomNumber
+- commitBehavior:
+    writeSessionParam: eat
+  name: eat
+  type:
+    name: eat

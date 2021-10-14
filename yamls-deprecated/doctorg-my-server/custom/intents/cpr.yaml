@@ -1,0 +1,11 @@
+parameters:
+- name: tips
+  type:
+    name: tips
+- name: cpr
+  type:
+    name: cpr
+trainingPhrases:
+- perform ($cpr 'cpr' auto=false)
+- ($cpr 'cpr' auto=false)
+- ($tips 'how' auto=true) do you do ($cpr 'cpr' auto=false)

@@ -1,0 +1,18 @@
+intentEvents:
+- intent: "no"
+  transitionToScene: cpr
+- intent: "yes"
+  transitionToScene: spinalInjuryOrNot
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+onEnter:
+  staticPrompt:
+    candidates:
+    - promptResponse:
+        firstSimple:
+          variants:
+          - speech: If it is possible, try to remove the obstruction without pushing
+              it in further. Is the patient now able to breathe?

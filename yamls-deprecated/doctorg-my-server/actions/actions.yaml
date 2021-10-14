@@ -1,0 +1,7 @@
+custom:
+  actions.intent.MAIN: {}
+  cpr: {}
+  fall: {}
+  logOut: {}
+  repeat: {}
+  unconscious: {}

@@ -1,0 +1,15 @@
+synonym:
+  entities:
+    bowel:
+      synonyms:
+      - bowel
+      - bowl
+      - poo
+      - poop
+      - feces
+      - stool
+      - bm
+      - bowel movement
+      - bow well
+      - bottle
+  matchType: EXACT_MATCH

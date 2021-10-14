@@ -1,0 +1,18 @@
+synonym:
+  entities:
+    eat:
+      synonyms:
+      - eat
+      - hit
+      - it
+      - heat
+      - meal
+      - food
+      - breakfast
+      - lunch
+      - dinner
+      - snack
+      - "8"
+      - ate
+      - hate
+  matchType: EXACT_MATCH

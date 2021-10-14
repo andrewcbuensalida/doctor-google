@@ -1,0 +1,8 @@
+.env
+node_modules
+*.pem
+*.pub
+*file.json
+*1000a.json
+git config --global user.email "andrewcbuensalida@gmail.com"
+git config --global user.name "andrewcbuensalida"

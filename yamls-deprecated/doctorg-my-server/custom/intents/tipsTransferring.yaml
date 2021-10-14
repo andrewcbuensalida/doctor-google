@@ -1,0 +1,17 @@
+parameters:
+- name: tips
+  type:
+    name: tips
+- name: roomNumber
+  type:
+    name: roomNumber
+- name: transferring
+  type:
+    name: transferring
+trainingPhrases:
+- ($tips 'guide' auto=true) me through the process of ($transferring 'transferring'
+  auto=true) ($roomNumber '423 window' auto=false)
+- ($tips 'how' auto=true) do i ($transferring 'transfer' auto=false) ($roomNumber
+  '523 window' auto=true)
+- give me ($tips 'tips' auto=true) on ($tips 'how to' auto=false) ($transferring 'transfer'
+  auto=false) ($roomNumber '101 door' auto=true)

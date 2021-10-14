@@ -1,0 +1,19 @@
+intentEvents:
+- intent: conscious
+  transitionToScene: spinalInjuryOrNot
+- intent: unconscious
+  transitionToScene: unconscious
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+onEnter:
+  staticPrompt:
+    candidates:
+    - promptResponse:
+        firstSimple:
+          variants:
+          - speech: Make sure the scene is safe. If it is, check if the patient is
+              conscious or unconscious. To do so, tap them on their shoulder and shout
+              "are you okay!?" Is the patient conscious, or unconscious?

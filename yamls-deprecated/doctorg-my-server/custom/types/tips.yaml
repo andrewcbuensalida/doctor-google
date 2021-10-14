@@ -1,0 +1,14 @@
+synonym:
+  entities:
+    tips:
+      synonyms:
+      - tips
+      - hints
+      - strategy
+      - help
+      - how to
+      - pointers
+      - guide
+      - step by step
+      - guidelines
+  matchType: EXACT_MATCH

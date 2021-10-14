@@ -1,0 +1,24 @@
+parameters:
+- name: when
+  type:
+    name: when
+- name: bowel
+  type:
+    name: bowel
+- name: roomNumber
+  type:
+    name: roomNumber
+- name: continentIncontinent
+  type:
+    name: continentIncontinent
+trainingPhrases:
+- ($when 'when' auto=true) was the last ($bowel 'bowel movement' auto=true) of($roomNumber
+  ' 523 window' auto=false)
+- ($when 'when' auto=true) was ($roomNumber '634 window' auto=false) ($continentIncontinent
+  'continent' auto=true)
+- ($when 'when' auto=true) was ($roomNumber '232 door' auto=false) last($continentIncontinent
+  ' in continent' auto=false)
+- ($when 'when' auto=true) was the last time ($roomNumber '5243 window' auto=false)
+  use the ($bowel 'bathroom' auto=false)
+- ($when 'when' auto=true) did($roomNumber ' 423 door' auto=false) last had a ($bowel
+  'bowel movement' auto=true)

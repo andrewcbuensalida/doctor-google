@@ -1,0 +1,23 @@
+intentEvents:
+- intent: bowel
+  transitionToScene: bowel
+- intent: recordMealConsumption
+  transitionToScene: recordMealConsumption
+- intent: whenEat
+  transitionToScene: whenEat
+- intent: whenBowel
+  transitionToScene: whenBowel
+- intent: tipsTransferring
+  transitionToScene: tipsTransferring
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+onEnter:
+  staticPrompt:
+    candidates:
+    - promptResponse:
+        suggestions:
+        - title: log out
+  webhookHandler: start

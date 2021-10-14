@@ -1,0 +1,8 @@
+synonym:
+  entities:
+    next:
+      synonyms:
+      - next
+      - and then what
+      - then
+  matchType: EXACT_MATCH

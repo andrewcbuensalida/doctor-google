@@ -1,0 +1,33 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  transitionToScene: spinalInjuryOrNot
+intentEvents:
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+onEnter:
+  staticPrompt:
+    candidates:
+    - promptResponse:
+        firstSimple:
+          variants:
+          - speech: Place one of your hands on top of the other and clasp them together.  With
+              the heel of the hands and straight elbows, push hard and fast in the
+              center of the chest, slightly below the nipples.  Push at least 2 inches
+              deep. Compress their chest at a rate of least 100 times per minute.
+              Let the chest rise fully between compressions. After 30 chest compressions,
+              open the airway by lifting the chin slightly. Give two rescue breaths
+              by pinching their nose and blowing hard into their mouth.  If chest
+              does not rise, there might be an obstruction. Repeat the 30 chest compressions
+              and 2 rescue breaths until the person starts breathing. If an A.E.D.
+              arrives, continue performing CPR until the A.E.D. is ready to use. If
+              the patient gains consciousness, say "Hey Google, what's next?"
+slots:
+- commitBehavior:
+    writeSessionParam: next
+  name: next
+  required: true
+  type:
+    name: next

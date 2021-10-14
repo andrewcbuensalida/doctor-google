@@ -1,0 +1,26 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  transitionToScene: start
+intentEvents:
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+onEnter:
+  staticPrompt:
+    candidates:
+    - promptResponse:
+        firstSimple:
+          variants:
+          - speech: At this point, a head to toe assessment is performed to obtain
+              baseline information, including neurologic, cardiac, musculoskeletal,
+              and integument assessment. Continue checking vitals every 30 minutes
+              for the first 2 hours.  Say "Hey Google, next" to finish procedure.
+slots:
+- commitBehavior:
+    writeSessionParam: next
+  name: next
+  required: true
+  type:
+    name: next

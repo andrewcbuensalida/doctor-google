@@ -1,0 +1,8 @@
+synonym:
+  entities:
+    activityLog:
+      synonyms:
+      - log
+      - activity log
+      - activity
+  matchType: EXACT_MATCH

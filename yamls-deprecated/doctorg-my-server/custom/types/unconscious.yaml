@@ -1,0 +1,12 @@
+synonym:
+  entities:
+    unconscious:
+      synonyms:
+      - unconscious
+      - faint
+      - blacked out
+      - unaware
+      - dead
+      - unresponsive
+      - not responsive
+  matchType: EXACT_MATCH

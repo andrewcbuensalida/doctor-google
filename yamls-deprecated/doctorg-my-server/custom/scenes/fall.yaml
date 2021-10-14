@@ -1,0 +1,24 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  transitionToScene: consciousUnconscious
+intentEvents:
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+onEnter:
+  staticPrompt:
+    candidates:
+    - promptResponse:
+        firstSimple:
+          variants:
+          - speech: Please call the nurse on duty immediately. After doing so, say
+              "hey google, what is the next step"
+slots:
+- commitBehavior:
+    writeSessionParam: next
+  name: next
+  required: true
+  type:
+    name: next

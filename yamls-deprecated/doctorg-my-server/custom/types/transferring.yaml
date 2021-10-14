@@ -1,0 +1,8 @@
+synonym:
+  entities:
+    transferring:
+      synonyms:
+      - transfer
+      - move
+      - ambulate
+  matchType: EXACT_MATCH

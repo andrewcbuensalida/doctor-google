@@ -1,0 +1,9 @@
+synonym:
+  entities:
+    "yes":
+      synonyms:
+      - "yes"
+      - affirmative
+      - yeah
+      - yup
+  matchType: EXACT_MATCH

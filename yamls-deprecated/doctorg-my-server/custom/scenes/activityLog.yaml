@@ -1,0 +1,12 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  handler:
+    webhookHandler: activityLog
+  transitionToScene: start
+slots:
+- commitBehavior:
+    writeSessionParam: person
+  name: person
+  required: true
+  type:
+    name: person

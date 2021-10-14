@@ -1,0 +1,53 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  handler:
+    webhookHandler: recordMealConsumption
+intentEvents:
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+slots:
+- commitBehavior:
+    writeSessionParam: percentEaten
+  name: percentEaten
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: What percentage of the food was eaten?
+  required: true
+  type:
+    name: percentEaten
+- commitBehavior:
+    writeSessionParam: roomNumber
+  name: roomNumber
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: What is the patient's room number?
+  required: true
+  type:
+    name: roomNumber
+- commitBehavior:
+    writeSessionParam: meal
+  name: meal
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Is this for breakfast, lunch, or dinner?
+  required: true
+  type:
+    name: meal

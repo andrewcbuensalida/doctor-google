@@ -1,0 +1,22 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  handler:
+    webhookHandler: tipsTransferring
+intentEvents:
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+slots:
+- commitBehavior:
+    writeSessionParam: roomNumber
+  name: roomNumber
+  required: true
+  type:
+    name: roomNumber
+- commitBehavior:
+    writeSessionParam: transferring
+  name: transferring
+  type:
+    name: transfer

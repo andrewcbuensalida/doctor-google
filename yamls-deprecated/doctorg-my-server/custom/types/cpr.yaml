@@ -1,0 +1,8 @@
+synonym:
+  entities:
+    cpr:
+      synonyms:
+      - cpr
+      - compressions
+      - chest compressions
+  matchType: EXACT_MATCH

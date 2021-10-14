@@ -1,0 +1,29 @@
+synonym:
+  acceptUnknownValues: true
+  entities:
+    hard:
+      synonyms:
+      - hard
+      - constipated
+      - firm
+      - fun
+    soft:
+      synonyms:
+      - soft
+      - mushy
+    unkown:
+      synonyms:
+      - unkown
+      - i don't know
+    watery:
+      synonyms:
+      - diarrhea
+      - watery
+      - liquid
+      - loose
+      - lbm
+      - battery
+      - lottery
+      - pottery
+      - cautery
+  matchType: EXACT_MATCH

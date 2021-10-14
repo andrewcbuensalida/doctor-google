@@ -1,0 +1,8 @@
+parameters:
+- name: logOut
+  type:
+    name: logOut
+trainingPhrases:
+- ($logOut 'logout' auto=false)
+- ($logOut 'log out' auto=false)
+- ($logOut 'log me out' auto=false)

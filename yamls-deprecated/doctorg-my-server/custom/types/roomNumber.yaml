@@ -1,0 +1,236 @@
+synonym:
+  entities:
+    0 door:
+      synonyms:
+      - 0 door
+    1 door:
+      synonyms:
+      - 1 door
+      - one door
+      - won door
+    1 window:
+      synonyms:
+      - 1 window
+      - one window
+      - won window
+    2 door:
+      synonyms:
+      - 2 door
+      - two door
+      - tutor
+    2 window:
+      synonyms:
+      - 2 window
+      - two window
+    3 door:
+      synonyms:
+      - 3 door
+      - three door
+    3 window:
+      synonyms:
+      - 3 window
+      - three window
+    4 door:
+      synonyms:
+      - 4 door
+      - four door
+      - for door
+    4 window:
+      synonyms:
+      - 4 window
+      - four window
+      - for window
+    5 door:
+      synonyms:
+      - 5 door
+      - five door
+    5 window:
+      synonyms:
+      - 5 window
+      - five window
+    6 door:
+      synonyms:
+      - 6 door
+      - sex door
+      - six door
+    6 window:
+      synonyms:
+      - 6 window
+      - six window
+      - sex window
+    7 door:
+      synonyms:
+      - 7 door
+      - seven door
+    7 window:
+      synonyms:
+      - 7 window
+      - seven window
+    8 door:
+      synonyms:
+      - 8 door
+      - eight door
+      - ate door
+    8 window:
+      synonyms:
+      - 8 window
+      - ate window
+      - eight window
+    9 door:
+      synonyms:
+      - 9 door
+      - nine door
+    9 window:
+      synonyms:
+      - 9 window
+      - nine window
+    10 door:
+      synonyms:
+      - 10 door
+      - ten door
+      - tin door
+    10 window:
+      synonyms:
+      - 10 window
+      - ten window
+      - tin window
+    11 door:
+      synonyms:
+      - 11 door
+    11 window:
+      synonyms:
+      - 11 window
+    12 door:
+      synonyms:
+      - 12 door
+    12 window:
+      synonyms:
+      - 12 window
+    13 door:
+      synonyms:
+      - 13 door
+    13 window:
+      synonyms:
+      - 13 window
+    14 door:
+      synonyms:
+      - 14 door
+    14 window:
+      synonyms:
+      - 14 window
+    15 door:
+      synonyms:
+      - 15 door
+    15 window:
+      synonyms:
+      - 15 window
+    16 door:
+      synonyms:
+      - 16 door
+    16 window:
+      synonyms:
+      - 16 window
+    17 door:
+      synonyms:
+      - 17 door
+    17 window:
+      synonyms:
+      - 17 window
+    18 door:
+      synonyms:
+      - 18 door
+    18 window:
+      synonyms:
+      - 18 window
+    19 door:
+      synonyms:
+      - 19 door
+    19 window:
+      synonyms:
+      - 19 window
+    20 door:
+      synonyms:
+      - 20 door
+    20 window:
+      synonyms:
+      - 20 window
+    21 door:
+      synonyms:
+      - 21 door
+    21 window:
+      synonyms:
+      - 21 window
+    22 door:
+      synonyms:
+      - 22 door
+    22 window:
+      synonyms:
+      - 22 window
+    23 door:
+      synonyms:
+      - 23 door
+    23 window:
+      synonyms:
+      - 23 window
+    24 door:
+      synonyms:
+      - 24 door
+    24 window:
+      synonyms:
+      - 24 window
+    25 door:
+      synonyms:
+      - 25 door
+    25 window:
+      synonyms:
+      - 25 window
+    26 door:
+      synonyms:
+      - 26 door
+    26 window:
+      synonyms:
+      - 26 window
+    27 door:
+      synonyms:
+      - 27 door
+    27 window:
+      synonyms:
+      - 27 window
+    28 door:
+      synonyms:
+      - 28 door
+    28 window:
+      synonyms:
+      - 28 window
+    29 door:
+      synonyms:
+      - 29 door
+    29 window:
+      synonyms:
+      - 29 window
+    30 door:
+      synonyms:
+      - 30 door
+    30 window:
+      synonyms:
+      - 30 window
+    101 door:
+      synonyms:
+      - 101 door
+    101 window:
+      synonyms:
+      - 101 window
+    102 door:
+      synonyms:
+      - 102 door
+    102 window:
+      synonyms:
+      - 102 window
+    103 door:
+      synonyms:
+      - 103 door
+      - 10 3 door
+    103 window:
+      synonyms:
+      - 103 window
+  matchType: EXACT_MATCH

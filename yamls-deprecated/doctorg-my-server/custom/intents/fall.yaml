@@ -1,0 +1,11 @@
+parameters:
+- name: fall
+  type:
+    name: fall
+- name: roomNumber
+  type:
+    name: roomNumber
+trainingPhrases:
+- there's a ($fall 'fall' auto=true)
+- ($roomNumber '523 window' auto=true) is on the ($fall 'ground' auto=true)
+- room ($roomNumber '532 door' auto=false) had a ($fall 'fall' auto=true)

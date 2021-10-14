@@ -1,0 +1,11 @@
+synonym:
+  entities:
+    fall:
+      synonyms:
+      - fall
+      - fell
+      - ground
+      - floor
+      - slipped
+      - collapsed
+  matchType: EXACT_MATCH

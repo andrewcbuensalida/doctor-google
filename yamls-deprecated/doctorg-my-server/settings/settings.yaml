@@ -1,0 +1,25 @@
+category: HEALTH_AND_FITNESS
+defaultLocale: en
+enabledRegions:
+- Philippines
+- United States
+localizedSettings:
+  developerEmail: andrewcbuensalida@gmail.com
+  developerName: Andrew Buensalida
+  displayName: doctor google
+  fullDescription: Say "Hey Google" to your Google Assistant and say "Jeff Bezos ate
+    80% of his breakfast/lunch/dinner" to save that record to the Firestore database.
+    You can also say "Bill Gates was incontinent/continent in the bladder". To hear
+    the records of the patient, say "give me ______'s history". Other patients are
+    [Elon Musk, Steve Jobs, Mark Zuckerberg]
+  privacyPolicyUrl: https://hoopstrapp.com
+  pronunciation: doctor google
+  sampleInvocations:
+  - Talk to Auto Scribe
+  shortDescription: Auto Scribe is a voice-activated medical charting app.
+  smallLogoImage: https://lh3.googleusercontent.com/O2hrsAtMoISiVyRqxXOGurA43vsiaamH_IKd6ifGL5lH9-iafJj44dFD8X7Eef7XZiTepcM79b9X
+  voice: female_1
+projectId: voice-charting-2
+surfaceRequirements:
+  minimumRequirements:
+  - capability: AUDIO_OUTPUT

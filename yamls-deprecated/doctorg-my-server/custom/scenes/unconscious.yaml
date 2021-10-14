@@ -1,0 +1,26 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  transitionToScene: breathingNotBreathing
+intentEvents:
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+onEnter:
+  staticPrompt:
+    candidates:
+    - promptResponse:
+        firstSimple:
+          variants:
+          - speech: Instruct someone to call 911 immediately to get an ambulance.
+              If another person is available, they should look for an AED. While they
+              are busy, lay the patient on their back. When this is done, say "Hey
+              Google, what's next".
+slots:
+- commitBehavior:
+    writeSessionParam: next
+  name: next
+  required: true
+  type:
+    name: next

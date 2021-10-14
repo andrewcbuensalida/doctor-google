@@ -1,0 +1,26 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  transitionToScene: monitoring
+intentEvents:
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+onEnter:
+  staticPrompt:
+    candidates:
+    - promptResponse:
+        firstSimple:
+          variants:
+          - speech: 'Check if the patient has a spinal cord injury. If there is a
+              spinal injury, call their physician, and do not move the patient. If
+              there is no spinal injury, carefully move the patient to a bed or chair.
+              Say "Hey Google, what''s next?" when you are done. '
+slots:
+- commitBehavior:
+    writeSessionParam: next
+  name: next
+  required: true
+  type:
+    name: next

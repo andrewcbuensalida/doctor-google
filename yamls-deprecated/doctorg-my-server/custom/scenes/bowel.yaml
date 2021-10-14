@@ -1,0 +1,144 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  handler:
+    webhookHandler: bowel
+  transitionToScene: start
+intentEvents:
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+slots:
+- commitBehavior:
+    writeSessionParam: bowel
+  name: bowel
+  required: true
+  type:
+    name: bowel
+- commitBehavior:
+    writeSessionParam: roomNumber
+  name: roomNumber
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: What is the room number?
+  required: true
+  type:
+    name: roomNumber
+- commitBehavior:
+    writeSessionParam: continentIncontinent
+  name: continentIncontinent
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Were they incontinent or continent?
+    noInputFinalPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was he continent or incontinent?
+    noInputPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was he continent or incontinent?
+    noInputPrompt2:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was he continent or incontinent?
+    noMatchFinalPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was he continent or incontinent?
+    noMatchPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was he continent or incontinent?
+    noMatchPrompt2:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was he continent or incontinent?
+  required: true
+  type:
+    name: continentIncontinent
+- commitBehavior:
+    writeSessionParam: stoolConsistency
+  name: stoolConsistency
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was it firm, soft, or watery?
+    noInputFinalPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was it firm, soft, or watery?
+    noInputPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was it firm, soft, or watery?
+    noInputPrompt2:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was it firm, soft, or watery?
+    noMatchFinalPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was it firm, soft, or watery?
+    noMatchPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was it firm, soft, or watery?
+    noMatchPrompt2:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Was it firm, soft, or watery?
+  required: true
+  type:
+    name: stoolConsistency

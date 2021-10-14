@@ -1,0 +1,11 @@
+synonym:
+  entities:
+    conscious:
+      synonyms:
+      - conscious
+      - aware
+      - awake
+      - alert
+      - oriented
+      - responsive
+  matchType: EXACT_MATCH

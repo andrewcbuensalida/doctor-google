@@ -1,0 +1,17 @@
+handlers:
+  - name: start
+  - name: recordMealConsumption
+  - name: noMatch
+  - name: bowel
+  - name: logIn
+  - name: activityLog
+  - name: employeeIdNumber
+  - name: repeat
+  - name: whenEat
+  - name: whenBowel
+  - name: tipsTransferring
+httpsEndpoint:
+  baseUrl: https://doctorg.anhonestobserver.com
+  endpointApiVersion: 2
+# inlineCloudFunction:
+#   executeFunction: ActionsOnGoogleFulfillment

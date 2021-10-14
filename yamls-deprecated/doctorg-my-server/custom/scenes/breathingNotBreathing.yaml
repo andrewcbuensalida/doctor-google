@@ -1,0 +1,20 @@
+intentEvents:
+- intent: "yes"
+  transitionToScene: spinalInjuryOrNot
+- intent: "no"
+  transitionToScene: notBreathing
+- handler:
+    webhookHandler: noMatch
+  intent: actions.intent.NO_MATCH_1
+- intent: actions.intent.CANCEL
+  transitionToScene: start
+onEnter:
+  staticPrompt:
+    candidates:
+    - promptResponse:
+        firstSimple:
+          variants:
+          - speech: Next, kneel beside their chest. Open their airway by tilting their
+              head slightly back by lifting their chin and opening their mouth. Check
+              if they're breathing by placing your ear next to the person's mouth
+              for not more than 10 seconds. Are they breathing?

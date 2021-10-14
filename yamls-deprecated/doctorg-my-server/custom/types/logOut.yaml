@@ -1,0 +1,13 @@
+synonym:
+  entities:
+    log out:
+      synonyms:
+      - log out
+      - logging out
+      - log me out
+      - log off
+      - logoff
+      - logout
+      - logging off
+      - log me off
+  matchType: EXACT_MATCH

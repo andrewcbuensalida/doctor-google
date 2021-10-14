@@ -1,0 +1,20 @@
+parameters:
+- name: continentIncontinent
+  type:
+    name: continentIncontinent
+- name: bowel
+  type:
+    name: bowel
+- name: roomNumber
+  type:
+    name: roomNumber
+trainingPhrases:
+- ($roomNumber '523 door ' auto=false)went ($bowel 'poo' auto=true)
+- ($roomNumber '300 door ' auto=false)had a ($bowel 'bowel movement' auto=true)
+- ($roomNumber '200 window ' auto=false)made a ($bowel 'bowel movement' auto=true)
+- ($patient 'Steve Jobs' auto=false) was ($continentIncontinent 'continent' auto=true)
+  in the ($bowel 'bowel' auto=true)
+- ($patient 'Elon Musk' auto=false) was ($continentIncontinent 'in continent' auto=true)
+  in the ($bowel 'bowl' auto=true)
+- Mr ($patient 'Bill Gates' auto=false) is ($continentIncontinent 'incontinent' auto=true)
+  in the ($bowel 'bow well' auto=false)

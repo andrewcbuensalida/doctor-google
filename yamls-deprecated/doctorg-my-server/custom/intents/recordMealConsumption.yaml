@@ -1,0 +1,34 @@
+parameters:
+- name: percentEaten
+  type:
+    name: percentEaten
+- name: meal
+  type:
+    name: meal
+- name: roomNumber
+  type:
+    name: roomNumber
+trainingPhrases:
+- room ($roomNumber '525 window' auto=false) ate ($percentEaten '50%' auto=true) of
+  ($meal 'breakfast' auto=true)
+- room number ($roomNumber '2 window' auto=false) ate his ($meal 'dinner' auto=true)
+- ($roomNumber '1 window ' auto=false)ate ($percentEaten '70%' auto=false) of her
+  ($meal 'lunch' auto=false)
+- ($roomNumber '38 window' auto=false)  ate ($percentEaten 'half ' auto=false)her
+  ($meal 'breakfast' auto=true)
+- room ($roomNumber '64 door ' auto=false)finished ($percentEaten 'all' auto=true)
+  his ($meal 'lunch' auto=true)
+- Room number ($roomNumber '600 door ' auto=false)ate ($percentEaten '50%' auto=true)
+  of the ($meal 'dinner' auto=true)
+- ($roomNumber '6 door' auto=false) ate ($percentEaten '1 third' auto=false) of her
+  ($meal 'dinner' auto=true)
+- resident ($roomNumber '4 window' auto=false) ate($percentEaten ' three quarters'
+  auto=false) of his ($meal 'lunch' auto=true)
+- patient ($roomNumber '52 door ' auto=false)8 ($percentEaten 'a quarter' auto=false)
+  of his ($meal 'dinner' auto=false)
+- room ($roomNumber '5434 window' auto=false) ate ($percentEaten '3/4' auto=true)
+  of his ($meal 'lunch' auto=true)
+- ($roomNumber '72 door' auto=false) 8 ($percentEaten '50%' auto=true) of his ($meal
+  'dinner' auto=true)
+- ($roomNumber '52 window' auto=false) ate ($percentEaten '100%' auto=false) of his
+  ($meal 'breakfast' auto=false)

@@ -1,0 +1,22 @@
+parameters:
+- name: roomNumber
+  type:
+    name: roomNumber
+- name: when
+  type:
+    name: when
+- name: eat
+  type:
+    name: eat
+trainingPhrases:
+- ($when 'when' auto=true) did ($roomNumber '234 door' auto=false) ($eat 'it' auto=false)
+- ($when 'when' auto=true) did ($roomNumber '834 window' auto=false) last ($eat 'hit'
+  auto=false)
+- ($when 'when' auto=true) did ($roomNumber '252 window' auto=false) last have a ($eat
+  'meal' auto=false)
+- ($when 'when' auto=true) did ($roomNumber '421 door' auto=false) last ($eat 'eat'
+  auto=false)
+- ($when 'when ' auto=false)did ($roomNumber '102 window' auto=false) last ($eat 'eat'
+  auto=false)
+- ($when 'when' auto=false) did ($roomNumber '201 door' auto=false) have ($eat 'food'
+  auto=false)
