@@ -19,82 +19,66 @@ const app = conversation();
 
 // Register handlers for Actions SDK
 
-// const employeeIdNumber = conv => {
-// conv.session.params.employeeIdNumber = conv.intent.query;
-//   conv.scene.next.name = "pin";
-// };
+const numToString = (num) => {
+	if (typeof num == "number") {
+		return String(num);
+	} else {
+		return num.join("");
+	}
+};
+//to speed up testing
+let employeeIdNumber = "1234",
+	pin = "5678",
+	firstName = "Andrew",
+	roomNumber;
 
 const logIn = async (conv) => {
-	// conv.session.params.pin = conv.intent.query;
-	console.log("This is conv.session.params");
-	console.log(conv.session.params);
-
-	// const employeeIdNumber = wordsToNumbers(
-	// conv.session.params.employeeIdNumber.join("")
-	// );
-	// const pin = wordsToNumbers(String(conv.session.params.pin.join("")));
-	const employeeIdNumber = conv.session.params.employeeIdNumber.join("");
-	const pin = conv.session.params.pin.join("");
-
+	//sometimes google thinks pin and id number is an array, sometime it thinks its just a number
+	employeeIdNumber = numToString(conv.session.params.employeeIdNumber);
+	pin = numToString(conv.session.params.pin);
 	console.log("This is employeeIdNumber");
 	console.log(employeeIdNumber);
-	console.log("This is pin");
-	console.log(pin);
 
 	await database
 		.collection("Employees")
 		.where("employeeIdNumber", "==", `${employeeIdNumber}`)
 		.get()
 		.then((employees) => {
-			if (employees.docs[0]) {
-				if (employees.docs[0].data().pin == pin) {
-					conv.session.params.firstName = employees.docs[0].data().firstName;
-					conv.scene.next.name = "start";
-				} else {
-					conv.add("Wrong ID number and/or pass phrase. ");
-					conv.scene.next.name = "employeeIdNumber";
-				}
+			if (employees.docs[0] && employees.docs[0].data().pin == pin) {
+				firstName = employees.docs[0].data().firstName;
+				conv.scene.next.name = "start";
 			} else {
-				conv.add("Wrong ID number and/or pass phrase. ");
+				conv.add("Wrong ID pin combination. ");
 				conv.scene.next.name = "employeeIdNumber";
 			}
 		});
 };
 
-// // to simulate call button being pressed, promisifying setTimeout
-// function timeout(ms) {
-//     return new Promise(resolve => setTimeout(resolve, ms));
-// }
-
 const start = (conv) => {
-	// //   to simulate call button being pressed. so far doesnt work.
-	// 	timeout(10000).then(() => conv.add("room 223 is calling"));
-
-	// //   just to speed things up during development
-	//   conv.session.params.employeeIdNumber = '1234';
 	//   if it's the first time logging in for the session
-	if (conv.session.params.pin) {
-		conv.session.params.pin = null;
-		conv.add(
-			`Hello ${conv.session.params.firstName}. What would you like me to record?`
-		);
-	} else {
-		conv.add("What else would you like me to record?");
+	let firstGreeting = "";
+
+	if (pin) {
+		pin = null;
+		firstGreeting = `Hello ${firstName}.`;
 	}
+	conv.add(
+		firstGreeting +
+			"Would you like to create a record, get a record, or get tips about a patient?"
+	);
 };
 
 // can't have a roomNumber 2 because google translates it as 'to'
 const roomVerification = async (conv) => {
+	roomNumber = numToString(conv.session.params.roomNumber);
 	return await database
 		.collection("Patients")
-		.where("roomNumber", "==", conv.session.params.roomNumber.toLowerCase())
+		.where("roomNumber", "==", roomNumber)
 		.get()
 		.then((patients) => {
 			if (!patients.docs[0]) {
-				conv.add(
-					"I couldn't find that room number. Please record this event manually. "
-				);
-				conv.scene.next.name = "start";
+				conv.add("I couldn't find that room number. ");
+				conv.scene.next.name = conv.scene.name;
 				return false;
 			} else return patients.docs[0].data();
 		});
@@ -104,24 +88,30 @@ const recordMealConsumption = async (conv) => {
 	await roomVerification(conv).then(async (patient) => {
 		if (patient) {
 			await database.collection("ActivityLog").add({
-				employeeIdNumber: conv.session.params.employeeIdNumber,
+				employeeIdNumber: employeeIdNumber,
 				firstName: patient.firstName,
 				lastName: patient.lastName,
 				roomNumber: patient.roomNumber,
 				timeStamp: Date.now(),
-				meal: conv.session.params.meal,
-				percentEaten: conv.session.params.percentEaten,
-				hasMeal: true,
+				amountEaten: numToString(conv.session.params.amountEaten),
 			});
-			await conv.add(
-				`Okay, I recorded that ${patient.firstName} ${patient.lastName} ate ${conv.session.params.percentEaten} of their ${conv.session.params.meal}. `
+			conv.add(
+				`Okay, I recorded that ${patient.firstName} ${patient.lastName} ate ${conv.session.params.amountEaten} out of 10 of their meal. `
 			);
 			conv.scene.next.name = "start";
 		}
 	});
 };
 
-const bowel = async (conv) => {
+const noMatch = (conv) => {
+	conv.add("Sorry, can you repeat that?");
+	conv.scene.next.name = conv.scene.name;
+};
+
+const repeat = (conv) => {
+	conv.scene.next.name = conv.scene.name;
+};
+const createToiletingRecord = async (conv) => {
 	await roomVerification(conv).then(async (patient) => {
 		if (patient) {
 			await database.collection("ActivityLog").add({
@@ -130,12 +120,15 @@ const bowel = async (conv) => {
 				lastName: patient.lastName,
 				roomNumber: patient.roomNumber,
 				timeStamp: Date.now(),
-				bowel: conv.session.params.bowel,
-				continentIncontinent: conv.session.params.continentIncontinent,
-				stoolConsistency: conv.session.params.stoolConsistency,
+				// bowel: conv.session.params.bowel,
+				// continentIncontinent: conv.session.params.continentIncontinent == ,
+				// stoolConsistency: conv.session.params.stoolConsistency,
+				isIncontinent: conv.session.params.isIncontinent,
 			});
-			await conv.add(`Okay, I recorded that ${patient.firstName} ${patient.lastName} was ${conv.session.params.continentIncontinent} 
-      	in the bowel and it was ${conv.session.params.stoolConsistency}. `);
+			await conv.add(`Okay, I recorded that ${patient.firstName} ${
+				patient.lastName
+			} was ${conv.session.params.isIncontinent ? "incontinent" : "continent"} 
+      	in the bowel. `);
 			conv.scene.next.name = "start";
 		}
 	});
@@ -164,7 +157,7 @@ const activityLog = async (conv) => {
 					response += `${timeDifference(Date.now(), doc.data().timeStamp)}, ${
 						doc.data().person
 					} ate 
-          ${doc.data().percentEaten} of his ${doc.data().meal}. `;
+          ${doc.data().amountEaten} of his ${doc.data().meal}. `;
 				}
 			});
 		});
@@ -199,15 +192,6 @@ function timeDifference(current, previous) {
 		return Math.round(elapsed / msPerYear) + " years ago";
 	}
 }
-
-const noMatch = (conv) => {
-	conv.add("Sorry, can you repeat that?");
-	conv.scene.next.name = conv.scene.name;
-};
-
-const repeat = (conv) => {
-	conv.scene.next.name = conv.scene.name;
-};
 
 const whenEat = async (conv) => {
 	await roomVerification(conv).then(async (patient) => {
@@ -290,11 +274,11 @@ const tipsTransferring = async (conv) => {
 app.handle("logIn", logIn);
 app.handle("start", start);
 app.handle("recordMealConsumption", recordMealConsumption);
-app.handle("bowel", bowel);
+app.handle("createToiletingRecord", createToiletingRecord);
 // app.handle('activityLog', activityLog);
+app.handle("whenEat", whenEat);
 app.handle("noMatch", noMatch);
 app.handle("repeat", repeat);
-app.handle("whenEat", whenEat);
 app.handle("whenBowel", whenBowel);
 app.handle("tipsTransferring", tipsTransferring);
 

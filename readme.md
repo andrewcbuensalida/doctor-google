@@ -85,3 +85,12 @@ https://www.youtube.com/watch?v=8-4CQhOAVTI
 https://www.youtube.com/watch?v=ohkMRA74MB4
 https://www.youtube.com/watch?v=Nyn-CEgy-B8
 these other methods involve logging into the router.
+
+features:
+create record bowel bladder
+get record bowel bladder
+create record eating including percent
+get eating record
+transferring, toileting, cpr, diet tips
+logout
+repeat
