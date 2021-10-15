@@ -71,3 +71,16 @@ sudo systemctl reload nginx
 install certbot sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot --nginx
+
+had to config user.name and user.email for git in order to push from vm. git config --global user.name "andrewcbuensalida"
+git config --global user.email "andrewcbuensalida@gmail.com"
+
+in the end, compute engine was crashing also, even with 1gb memory. ended up doing https://www.youtube.com/watch?v=lE38yBnkIB8 to make my laptop the server. it has an expiry though of 2 hours. i wonder if i could refesh it after.
+to start ngrok, ngrok.exe http 3300 , 3300 being the port of the node server. has to be the https ngrok url.
+other methods i could try in the future
+https://www.youtube.com/watch?v=b50hB7cfsfg
+https://www.youtube.com/watch?v=RcYixki4-is
+https://www.youtube.com/watch?v=8-4CQhOAVTI
+https://www.youtube.com/watch?v=ohkMRA74MB4
+https://www.youtube.com/watch?v=Nyn-CEgy-B8
+these other methods involve logging into the router.
