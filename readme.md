@@ -73,6 +73,7 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot --nginx
 
 had to config user.name and user.email for git in order to push from vm. git config --global user.name "andrewcbuensalida"
+
 git config --global user.email "andrewcbuensalida@gmail.com"
 
 in the end, compute engine was crashing also, even with 1gb memory. ended up doing https://www.youtube.com/watch?v=lE38yBnkIB8 to make my laptop the server. it has an expiry though of 2 hours. i wonder if i could refesh it after.
