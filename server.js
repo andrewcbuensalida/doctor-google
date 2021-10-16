@@ -27,10 +27,7 @@ const numToString = (num) => {
 	}
 };
 //to speed up testing
-let employeeIdNumber = "2",
-	pin = "1234",
-	firstName = "Madison",
-	roomNumber;
+let employeeIdNumber, pin, firstName, roomNumber;
 
 const logIn = async (conv) => {
 	//sometimes google thinks pin and id number is an array, sometime it thinks its just a number
@@ -47,7 +44,7 @@ const logIn = async (conv) => {
 				conv.scene.next.name = "start";
 			} else {
 				conv.add("Wrong ID pin combination. ");
-				conv.scene.next.name = "employeeIdNumber";
+				conv.scene.next.name = "login";
 			}
 		});
 };
@@ -62,7 +59,7 @@ const start = (conv) => {
 	}
 	conv.add(
 		firstGreeting +
-			"Would you like to create a record, get records, or get tips about a patient?"
+			"Would you like to create an entry, get records, or get tips about a patient?"
 	);
 };
 
@@ -102,11 +99,11 @@ const createEatingRecord = async (conv) => {
 };
 
 const noMatch = (conv) => {
-	conv.add("Sorry, can you repeat that?");
+	conv.add("Pardon me, but can you say that in a different way?");
 	conv.scene.next.name = conv.scene.name;
 };
 
-const repeat = (conv) => {
+const sayAgain = (conv) => {
 	conv.scene.next.name = conv.scene.name;
 };
 const createBriefChangeRecord = async (conv) => {
@@ -118,6 +115,7 @@ const createBriefChangeRecord = async (conv) => {
 			timeStamp: Date.now(),
 			isBriefChangeRecord: true,
 			firstName: patient.firstName,
+			lastName: patient.lastName,
 		});
 		conv.add(
 			`Okay, I recorded that ${patient.firstName} ${patient.lastName} had a brief change. `
@@ -131,14 +129,15 @@ const getPendingBriefChanges = async (conv) => {
 	const oldestBriefChanges = await database
 		.collection("ActivityLog")
 		.where("isBriefChangeRecord", "==", true)
+		.orderBy("timeStamp")
 		.limit(3)
 		.get();
 
 	if (oldestBriefChanges.docs.length > 0) {
 		let response = "";
 		oldestBriefChanges.docs.forEach((briefChange) => {
-			response += `${
-				briefChange.data().firstName
+			response += `${briefChange.data().firstName} ${
+				briefChange.data().lastName
 			} had a brief change ${timeDifference(
 				Date.now(),
 				briefChange.data().timeStamp
@@ -243,7 +242,7 @@ const getEatRecord = async (conv) => {
 	}
 };
 
-const tipsTransferring = async (conv) => {
+const getTransferringTips = async (conv) => {
 	await roomVerification(conv).then(async (patient) => {
 		if (patient) {
 			await database
@@ -253,7 +252,6 @@ const tipsTransferring = async (conv) => {
 				.then((patient) => {
 					if (patient.docs[0].data().transferring) {
 						conv.add(patient.docs[0].data().transferring);
-						//                       	 conv.add("very good");
 					} else {
 						conv.add(
 							`${patient.firstName} has no transferring tips. `
@@ -274,8 +272,8 @@ app.handle("getTopPerformers", getTopPerformers);
 app.handle("getPendingBriefChanges", getPendingBriefChanges);
 app.handle("getEatRecord", getEatRecord);
 app.handle("noMatch", noMatch);
-app.handle("repeat", repeat);
-app.handle("tipsTransferring", tipsTransferring);
+app.handle("sayAgain", sayAgain);
+app.handle("getTransferringTips", getTransferringTips);
 
 const expressApp = express().use(bodyParser.json());
 expressApp.post("/", app);

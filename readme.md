@@ -91,6 +91,8 @@ create brief change record
 get brief change record
 create record eating including percent
 get eating record
-transferring, toileting, cpr, diet tips
+transferring, toileting, cpr, feeding tips
 logout
 repeat
+
+saying repeat is a reserved action in google assistant, so they dont like it when i assign it to a function.
