@@ -87,8 +87,8 @@ https://www.youtube.com/watch?v=Nyn-CEgy-B8
 these other methods involve logging into the router.
 
 features:
-create record bowel bladder
-get record bowel bladder
+create brief change record
+get brief change record
 create record eating including percent
 get eating record
 transferring, toileting, cpr, diet tips

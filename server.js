@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { wordsToNumbers } = require("words-to-numbers");
+// const { wordsToNumbers } = require("words-to-numbers");
 require("dotenv").config();
 
 // ... app code here
@@ -27,17 +27,15 @@ const numToString = (num) => {
 	}
 };
 //to speed up testing
-let employeeIdNumber = "1234",
-	pin = "5678",
-	firstName = "Andrew",
+let employeeIdNumber = "2",
+	pin = "1234",
+	firstName = "Madison",
 	roomNumber;
 
 const logIn = async (conv) => {
 	//sometimes google thinks pin and id number is an array, sometime it thinks its just a number
 	employeeIdNumber = numToString(conv.session.params.employeeIdNumber);
 	pin = numToString(conv.session.params.pin);
-	console.log("This is employeeIdNumber");
-	console.log(employeeIdNumber);
 
 	await database
 		.collection("Employees")
@@ -64,7 +62,7 @@ const start = (conv) => {
 	}
 	conv.add(
 		firstGreeting +
-			"Would you like to create a record, get a record, or get tips about a patient?"
+			"Would you like to create a record, get records, or get tips about a patient?"
 	);
 };
 
@@ -77,26 +75,26 @@ const roomVerification = async (conv) => {
 		.get()
 		.then((patients) => {
 			if (!patients.docs[0]) {
-				conv.add("I couldn't find that room number. ");
 				conv.scene.next.name = conv.scene.name;
-				return false;
-			} else return patients.docs[0].data();
+				conv.add("I couldn't find that room number. ");
+			} else {
+				return patients.docs[0].data();
+			}
 		});
 };
 
-const recordMealConsumption = async (conv) => {
-	await roomVerification(conv).then(async (patient) => {
+const createEatingRecord = async (conv) => {
+	await roomVerification(conv).then((patient) => {
 		if (patient) {
-			await database.collection("ActivityLog").add({
+			database.collection("ActivityLog").add({
 				employeeIdNumber: employeeIdNumber,
-				firstName: patient.firstName,
-				lastName: patient.lastName,
 				roomNumber: patient.roomNumber,
 				timeStamp: Date.now(),
-				amountEaten: numToString(conv.session.params.amountEaten),
+				amountEaten: conv.session.params.amountEaten,
+				isEatRecord: true,
 			});
 			conv.add(
-				`Okay, I recorded that ${patient.firstName} ${patient.lastName} ate ${conv.session.params.amountEaten} out of 10 of their meal. `
+				`Okay, I recorded that ${patient.firstName} ${patient.lastName} ate ${conv.session.params.amountEaten} of their food. `
 			);
 			conv.scene.next.name = "start";
 		}
@@ -111,63 +109,89 @@ const noMatch = (conv) => {
 const repeat = (conv) => {
 	conv.scene.next.name = conv.scene.name;
 };
-const createToiletingRecord = async (conv) => {
-	await roomVerification(conv).then(async (patient) => {
-		if (patient) {
-			await database.collection("ActivityLog").add({
-				employeeIdNumber: conv.session.params.employeeIdNumber,
-				firstName: patient.firstName,
-				lastName: patient.lastName,
-				roomNumber: patient.roomNumber,
-				timeStamp: Date.now(),
-				// bowel: conv.session.params.bowel,
-				// continentIncontinent: conv.session.params.continentIncontinent == ,
-				// stoolConsistency: conv.session.params.stoolConsistency,
-				isIncontinent: conv.session.params.isIncontinent,
-			});
-			await conv.add(`Okay, I recorded that ${patient.firstName} ${
-				patient.lastName
-			} was ${conv.session.params.isIncontinent ? "incontinent" : "continent"} 
-      	in the bowel. `);
-			conv.scene.next.name = "start";
-		}
-	});
-};
-
-// gets activity of a person, not working right now
-const activityLog = async (conv) => {
-	let response = "";
-	let hasActivityLog = false;
-	await database
-		.collection("ActivityLog")
-		.where("", "==", `${conv.session.params.person}`)
-		.orderBy("timeStamp")
-		.get()
-		.then((activityLog) => {
-			activityLog.docs.forEach((doc) => {
-				hasActivityLog = true;
-				if (doc.data().bowel) {
-					response += `${timeDifference(Date.now(), doc.data().timeStamp)}, ${
-						doc.data().person
-					} was 
-          ${doc.data().continentIncontinent} in the bowel and it was ${
-						doc.data().stoolConsistency
-					}. `;
-				} else if (doc.data().meal) {
-					response += `${timeDifference(Date.now(), doc.data().timeStamp)}, ${
-						doc.data().person
-					} ate 
-          ${doc.data().amountEaten} of his ${doc.data().meal}. `;
-				}
-			});
+const createBriefChangeRecord = async (conv) => {
+	const patient = await roomVerification(conv);
+	if (patient) {
+		database.collection("ActivityLog").add({
+			employeeIdNumber: employeeIdNumber,
+			roomNumber: patient.roomNumber,
+			timeStamp: Date.now(),
+			isBriefChangeRecord: true,
+			firstName: patient.firstName,
 		});
-	if (hasActivityLog) {
-		await conv.add(response);
-	} else {
-		await conv.add(`${conv.session.params.person} has no records. `);
+		conv.add(
+			`Okay, I recorded that ${patient.firstName} ${patient.lastName} had a brief change. `
+		);
+		conv.scene.next.name = "start";
 	}
 };
 
+// gets activity of a person, not working right now
+const getPendingBriefChanges = async (conv) => {
+	const oldestBriefChanges = await database
+		.collection("ActivityLog")
+		.where("isBriefChangeRecord", "==", true)
+		.limit(3)
+		.get();
+
+	if (oldestBriefChanges.docs.length > 0) {
+		let response = "";
+		oldestBriefChanges.docs.forEach((briefChange) => {
+			response += `${
+				briefChange.data().firstName
+			} had a brief change ${timeDifference(
+				Date.now(),
+				briefChange.data().timeStamp
+			)}. `;
+		});
+		conv.add(response);
+	} else {
+		conv.add(`There are no pending brief changes. `);
+	}
+	conv.scene.next.name = "start";
+};
+
+const getTopPerformers = async (conv) => {
+	const briefChanges = await database
+		.collection("ActivityLog")
+		.where("isBriefChangeRecord", "==", true)
+		.where("timeStamp", ">", Date.now() - 1000 * 60 * 60 * 8)
+		.get();
+
+	if (briefChanges.docs.length > 0) {
+		let response = "";
+		let map = new Map();
+		briefChanges.docs.forEach((briefChange) => {
+			if (map.has(briefChange.data().employeeIdNumber)) {
+				map.set(
+					briefChange.data().employeeIdNumber,
+					Number(map.get(briefChange.data().employeeIdNumber)) + 1
+				);
+			} else {
+				map.set(briefChange.data().employeeIdNumber, 1);
+			}
+		});
+
+		const mapSort1 = [...map.entries()].sort((a, b) => b[1] - a[1]);
+		await Promise.all(
+			mapSort1.map(async (idAndCount) => {
+				const employee = await database
+					.collection("Employees")
+					.where("employeeIdNumber", "==", idAndCount[0])
+					.get();
+
+				response += `${employee.docs[0].data().firstName} did ${
+					idAndCount[1]
+				} brief change${idAndCount[1] == 1 ? "" : "s"}, `;
+			})
+		);
+		response += "in the last 8 hours. ";
+		conv.add(response);
+	} else {
+		conv.add(`There are no records. `);
+	}
+	conv.scene.next.name = "start";
+};
 // given two timeStamps, returns how much time ago the earlier time was from the latter time
 function timeDifference(current, previous) {
 	var msPerMinute = 60 * 1000;
@@ -193,61 +217,30 @@ function timeDifference(current, previous) {
 	}
 }
 
-const whenEat = async (conv) => {
-	await roomVerification(conv).then(async (patient) => {
-		if (patient) {
-			await database
-				.collection("ActivityLog")
-				.where("roomNumber", "==", `${patient.roomNumber}`)
-				.where("hasMeal", "==", true)
-				.orderBy("timeStamp", "desc")
-				.get()
-				.then((activityLog) => {
-					if (activityLog.docs[0]) {
-						conv.add(
-							`${patient.firstName} had ${
-								activityLog.docs[0].data().meal
-							} ${timeDifference(
-								Date.now(),
-								activityLog.docs[0].data().timeStamp
-							)}. `
-						);
-					} else {
-						conv.add(`${patient.firstName} has no records. `);
-					}
-				});
-			conv.scene.next.name = "start";
+const getEatRecord = async (conv) => {
+	const patient = await roomVerification(conv);
+	if (patient) {
+		const activityLog = await database
+			.collection("ActivityLog")
+			.where("roomNumber", "==", `${patient.roomNumber}`)
+			.where("isEatRecord", "==", true)
+			.orderBy("timeStamp", "desc")
+			.limit(1)
+			.get();
+		if (activityLog.docs[0]) {
+			conv.add(
+				`${patient.firstName} ate ${
+					activityLog.docs[0].amountEaten
+				} of their food ${timeDifference(
+					Date.now(),
+					activityLog.docs[0].data().timeStamp
+				)}. `
+			);
+		} else {
+			conv.add(`${patient.firstName} has no eating records. `);
 		}
-	});
-};
-
-const whenBowel = async (conv) => {
-	await roomVerification(conv).then(async (patient) => {
-		if (patient) {
-			await database
-				.collection("ActivityLog")
-				.where("roomNumber", "==", `${patient.roomNumber}`)
-				.where("bowel", "==", "bowel")
-				.orderBy("timeStamp", "desc")
-				.get()
-				.then((activityLog) => {
-					if (activityLog.docs[0]) {
-						conv.add(`${patient.firstName} had a ${
-							activityLog.docs[0].data().stoolConsistency
-						}, ${
-							activityLog.docs[0].data().continentIncontinent
-						} bowel movement 
-                      ${timeDifference(
-												Date.now(),
-												activityLog.docs[0].data().timeStamp
-											)}. `);
-					} else {
-						conv.add(`${patient.firstName} has no records. `);
-					}
-				});
-			conv.scene.next.name = "start";
-		}
-	});
+		conv.scene.next.name = "start";
+	}
 };
 
 const tipsTransferring = async (conv) => {
@@ -262,7 +255,9 @@ const tipsTransferring = async (conv) => {
 						conv.add(patient.docs[0].data().transferring);
 						//                       	 conv.add("very good");
 					} else {
-						conv.add(`${patient.firstName} has no transferring tips. `);
+						conv.add(
+							`${patient.firstName} has no transferring tips. `
+						);
 					}
 				});
 			conv.scene.next.name = "start";
@@ -273,13 +268,13 @@ const tipsTransferring = async (conv) => {
 // app.handle('employeeIdNumber', employeeIdNumber);
 app.handle("logIn", logIn);
 app.handle("start", start);
-app.handle("recordMealConsumption", recordMealConsumption);
-app.handle("createToiletingRecord", createToiletingRecord);
-// app.handle('activityLog', activityLog);
-app.handle("whenEat", whenEat);
+app.handle("createEatingRecord", createEatingRecord);
+app.handle("createBriefChangeRecord", createBriefChangeRecord);
+app.handle("getTopPerformers", getTopPerformers);
+app.handle("getPendingBriefChanges", getPendingBriefChanges);
+app.handle("getEatRecord", getEatRecord);
 app.handle("noMatch", noMatch);
 app.handle("repeat", repeat);
-app.handle("whenBowel", whenBowel);
 app.handle("tipsTransferring", tipsTransferring);
 
 const expressApp = express().use(bodyParser.json());
