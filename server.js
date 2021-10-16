@@ -29,6 +29,35 @@ const numToString = (num) => {
 //to speed up testing
 let employeeIdNumber, pin, firstName, roomNumber;
 
+const signup = async (conv) => {
+	//sometimes google thinks pin and id number is an array, sometime it thinks its just a number
+	employeeIdNumber = numToString(conv.session.params.employeeIdNumber);
+	pin = numToString(conv.session.params.pin);
+	firstName = conv.session.params.firstName;
+	let employee = await database
+		.collection("Employees")
+		.where("employeeIdNumber", "==", `${employeeIdNumber}`)
+		.limit(1)
+		.get();
+
+	if (employee.docs[0]) {
+		conv.add("That ID number already exists. ");
+		conv.scene.next.name = "loginOrSignup";
+	} else {
+		database.collection("Employees").add({
+			employeeIdNumber: employeeIdNumber,
+			pin: pin,
+			timeStamp: Date.now(),
+			firstName: firstName,
+		});
+
+		conv.add(
+			`Okay ${firstName}, your ID number is ${employeeIdNumber} and your pin number is ${pin}. `
+		);
+		conv.scene.next.name = "start";
+	}
+};
+
 const logIn = async (conv) => {
 	//sometimes google thinks pin and id number is an array, sometime it thinks its just a number
 	employeeIdNumber = numToString(conv.session.params.employeeIdNumber);
@@ -263,8 +292,8 @@ const getTransferringTips = async (conv) => {
 	});
 };
 
-// app.handle('employeeIdNumber', employeeIdNumber);
 app.handle("logIn", logIn);
+app.handle("signup", signup);
 app.handle("start", start);
 app.handle("createEatingRecord", createEatingRecord);
 app.handle("createBriefChangeRecord", createBriefChangeRecord);

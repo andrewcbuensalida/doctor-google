@@ -96,3 +96,6 @@ logout
 repeat
 
 saying repeat is a reserved action in google assistant, so they dont like it when i assign it to a function.
+
+ssh -i C:\swe\doctorg\doctorg\compute-engine-ssh\doc.pem andrewcbuensalida_gmail_com@34.102.120.157
+scp -i C:\swe\doctorg\doctorg\compute-engine-ssh\doc.pem C:\swe\doctorg\doctorg\server.js andrewcbuensalida_gmail_com@34.102.120.157:doctor-google
