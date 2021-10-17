@@ -27,12 +27,12 @@ const numToString = (num) => {
 	}
 };
 //to speed up testing
-let employeeIdNumber = "1",
-	pin = "1234",
-	firstName = "Andrew",
-	roomNumber;
+// let employeeIdNumber = "1",
+// 	pin = "1234",
+// 	firstName = "Andrew",
+// 	roomNumber;
 
-// let employeeIdNumber, pin, firstName, roomNumber;
+let employeeIdNumber, pin, firstName, roomNumber;
 
 const signup = async (conv) => {
 	//sometimes google thinks pin and id number is an array, sometime it thinks its just a number
