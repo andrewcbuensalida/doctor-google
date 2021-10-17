@@ -102,3 +102,4 @@ ssh -i C:\swe\doctorg\doctorg\compute-engine-ssh\doc.pem andrewcbuensalida_gmail
 scp -i C:\swe\doctorg\doctorg\compute-engine-ssh\doc.pem C:\swe\doctorg\doctorg\server.js andrewcbuensalida_gmail_com@34.102.120.157:doctor-google
 
 now setting up cloud build for cicd https://www.youtube.com/watch?v=Zd014DjonqE
+might not be possible. so just push from vs code. pull from compute engine. then install dependencies.
