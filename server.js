@@ -27,7 +27,12 @@ const numToString = (num) => {
 	}
 };
 //to speed up testing
-let employeeIdNumber, pin, firstName, roomNumber;
+let employeeIdNumber = "1",
+	pin = "1234",
+	firstName = "Andrew",
+	roomNumber;
+
+// let employeeIdNumber, pin, firstName, roomNumber;
 
 const signup = async (conv) => {
 	//sometimes google thinks pin and id number is an array, sometime it thinks its just a number
@@ -40,7 +45,7 @@ const signup = async (conv) => {
 		.limit(1)
 		.get();
 
-	if (employee.docs[0]) {
+	if (employee.docs.length > 0) {
 		conv.add("That ID number already exists. ");
 		conv.scene.next.name = "loginOrSignup";
 	} else {
@@ -155,21 +160,36 @@ const createBriefChangeRecord = async (conv) => {
 
 // gets activity of a person, not working right now
 const getPendingBriefChanges = async (conv) => {
-	const oldestBriefChanges = await database
-		.collection("ActivityLog")
-		.where("isBriefChangeRecord", "==", true)
-		.orderBy("timeStamp")
-		.limit(3)
-		.get();
+	const allPatients = await database.collection("Patients").get();
+	const allPatientsWithLastBriefChange = await Promise.all(
+		allPatients.docs.map(async (patient) => {
+			const lastBriefChange = await database
+				.collection("ActivityLog")
+				.where("roomNumber", "==", patient.data().roomNumber)
+				.orderBy("timeStamp", "desc") //latest brief change of the patient
+				.limit(1)
+				.get();
+			return [
+				patient.data(),
+				lastBriefChange.docs[0] ? lastBriefChange.docs[0].data() : null,
+			];
+		})
+	);
 
-	if (oldestBriefChanges.docs.length > 0) {
+	if (allPatientsWithLastBriefChange.length > 0) {
+		const sorted = allPatientsWithLastBriefChange
+			.sort((a, b) => {
+				return a[1].timeStamp - b[1].timeStamp;
+			})
+			.slice(0, 3);
+
 		let response = "";
-		oldestBriefChanges.docs.forEach((briefChange) => {
-			response += `${briefChange.data().firstName} ${
-				briefChange.data().lastName
+		sorted.forEach((patientWithBriefChange) => {
+			response += `${patientWithBriefChange[0].firstName} ${
+				patientWithBriefChange[0].lastName
 			} had a brief change ${timeDifference(
 				Date.now(),
-				briefChange.data().timeStamp
+				patientWithBriefChange[1].timeStamp
 			)}. `;
 		});
 		conv.add(response);
@@ -189,6 +209,7 @@ const getTopPerformers = async (conv) => {
 	if (briefChanges.docs.length > 0) {
 		let response = "";
 		let map = new Map();
+		//mapping id to count
 		briefChanges.docs.forEach((briefChange) => {
 			if (map.has(briefChange.data().employeeIdNumber)) {
 				map.set(
@@ -199,20 +220,25 @@ const getTopPerformers = async (conv) => {
 				map.set(briefChange.data().employeeIdNumber, 1);
 			}
 		});
-
-		const mapSort1 = [...map.entries()].sort((a, b) => b[1] - a[1]);
-		await Promise.all(
-			mapSort1.map(async (idAndCount) => {
+		//retrieving employee info based on id in the map
+		const employeeAndCounts = await Promise.all(
+			[...map].map(async (idAndCount) => {
 				const employee = await database
 					.collection("Employees")
 					.where("employeeIdNumber", "==", idAndCount[0])
+					.limit(1)
 					.get();
-
-				response += `${employee.docs[0].data().firstName} did ${
-					idAndCount[1]
-				} brief change${idAndCount[1] == 1 ? "" : "s"}, `;
+				return [employee.docs[0].data(), idAndCount[1]];
 			})
 		);
+		const sorted = employeeAndCounts.sort((a, b) => b[1] - a[1]);
+		//building the response
+		sorted.forEach((employeeAndCount) => {
+			response += `${employeeAndCount[0].firstName} did ${
+				employeeAndCount[1]
+			} brief change${employeeAndCount[1] == 1 ? "" : "s"}, `;
+		});
+
 		response += "in the last 8 hours. ";
 		conv.add(response);
 	} else {
