@@ -105,4 +105,6 @@ now setting up cloud build for cicd https://www.youtube.com/watch?v=Zd014DjonqE
 might not be possible. so just push from vs code. pull from compute engine. then install dependencies.
 
 trying again cicd, https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/git
-using git image to clone my repo.
+using git image to clone my repo. didnt work. maybe use ansible
+
+unfortunately google doesnt allow hipaa data to be transferred.

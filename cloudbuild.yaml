@@ -1,9 +1,0 @@
-steps:
-    # This build step clones a remote public repository from Github; no
-    # credentials are required.
-    - name: "gcr.io/cloud-builders/git"
-      args: ["pull", "https://github.com/andrewcbuensalida/doctor-google.git"]
-      dir: "doctor-google"
-    - name: node
-      entrypoint: npm
-      args: ["install", "--prefer-offline"]
