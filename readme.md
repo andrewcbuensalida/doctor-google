@@ -108,3 +108,6 @@ trying again cicd, https://github.com/GoogleCloudPlatform/cloud-builders/tree/ma
 using git image to clone my repo. didnt work. maybe use ansible
 
 unfortunately google doesnt allow hipaa data to be transferred.
+
+demo user id is 1 or 2
+password is 1234
